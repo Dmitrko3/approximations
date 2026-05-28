@@ -99,5 +99,5 @@ def main() -> None:
     print(f"Neville result: {neville_result}")
 
 
-if __name__ == "main":
+if __name__ == "__main__":
     main()
