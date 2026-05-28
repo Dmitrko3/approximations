@@ -1,7 +1,6 @@
 # Approximations
 5 Functions of Approximations
 
-# Numerical Analysis – Interpolation Methods Project
 
 ## Overview
 
