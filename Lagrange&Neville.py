@@ -9,10 +9,17 @@ from typing import List, Tuple
 Point = Tuple[float, float]
 
 
-def validate_input(points: List[Point], target_x: float) -> None:
+def validate_input(points: List[Point], target_x: float) -> float | None:
     """
     Validates that the interpolation input is legal.
+    If target_x is already in the table, returns the known y-value.
+    Otherwise returns None if validation passes.
     """
+    # Check if target_x is already in the table
+    for x, y in points:
+        if x == target_x:
+            return y
+
     if len(points) < 2:
         raise ValueError("At least two points are required.")
 
@@ -21,10 +28,7 @@ def validate_input(points: List[Point], target_x: float) -> None:
     if len(x_values) != len(set(x_values)):
         raise ValueError("X values must be unique.")
 
-    if target_x in x_values:
-        raise ValueError("Target x should not already appear in the table.")
-
-
+    return None
 def lagrange_interpolation(points: List[Point], target_x: float) -> float:
     """
     Calculates interpolation value using the Lagrange method.
@@ -48,28 +52,17 @@ def lagrange_interpolation(points: List[Point], target_x: float) -> float:
 
 
 def neville_interpolation(points: List[Point], target_x: float) -> float:
-    """
-    Calculates interpolation value using Neville's method.
-    """
     validate_input(points, target_x)
-
     n = len(points)
-    table = [[0.0 for _ in range(n)] for _ in range(n)]
-
-    for i in range(n):
-        table[i][0] = points[i][1]
+    p = [point[1] for point in points] # מערך חד ממדי שמאתחל עם ערכי ה-Y
 
     for j in range(1, n):
         for i in range(n - j):
             xi = points[i][0]
             xj = points[i + j][0]
+            p[i] = ((target_x - xj) * p[i] - (target_x - xi) * p[i + 1]) / (xi - xj)
 
-            table[i][j] = (
-                (target_x - xj) * table[i][j - 1]
-                - (target_x - xi) * table[i + 1][j - 1]
-            ) / (xi - xj)
-
-    return table[0][n - 1]
+    return p[0]
 
 
 def main() -> None:
