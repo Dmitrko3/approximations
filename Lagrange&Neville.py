@@ -13,7 +13,7 @@ def validate_input(points: List[Point], target_x: float) -> float | None:
     """
     Validates that the interpolation input is legal.
     If target_x is already in the table, returns the known y-value.
-    Otherwise returns None if validation passes.
+    Otherwise, returns None if validation passes.
     """
     # Check if target_x is already in the table
     for x, y in points:
@@ -73,10 +73,14 @@ def main() -> None:
     """
 
     points = [
-        (1.0, 1.0),
-        (2.0, 4.0),
-        (3.0, 9.0),
-        (4.0, 16.0),
+        (0.0, 0.500),
+        (0.3, 0.779),
+        (0.7, -0.054),
+        (1.0, -0.591),
+        (1.5, -0.368),
+        (2.0, -0.715),
+        (2.5, -0.056),
+        (3.0, 0.976)
     ]
 
     target_x = 2.5
@@ -88,7 +92,7 @@ def main() -> None:
     print("---------------------")
     print(f"Table points: {points}")
     print(f"Target x: {target_x}")
-    print(f"Lagrange result: {lagrange_result}")
+    #print(f"Lagrange result: {lagrange_result}")
     print(f"Neville result: {neville_result}")
 
 
